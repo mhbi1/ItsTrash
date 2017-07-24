@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class Helper {
 	public int value;
 	public int num;
-
 }
 
 public class GameController : MonoBehaviour {
@@ -15,7 +14,8 @@ public class GameController : MonoBehaviour {
 	public GameObject item;
 	public Text totalMoneyText;
 	public Helper[] hList;
-	int totalMoney;
+	public ItemManager im;
+	public int totalMoney;
 	int current = 0;
 	float time = 0.0f;
 
@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update (){
 	//Creates the trash item
+		current = im.current;
 		//Mouse clicking
 		if (Input.GetMouseButtonDown (0)){
 			Debug.Log ("Button pressed.");
@@ -42,6 +43,7 @@ public class GameController : MonoBehaviour {
 			mousePos.z = 1.0f;
 			var objectPos = Camera.main.ScreenToWorldPoint (mousePos);
 			if (objectPos.y > 1.5) {
+				item = im.getItem ();
 				Instantiate (item, objectPos, Quaternion.identity);
 			}
 		}
@@ -80,7 +82,8 @@ public class GameController : MonoBehaviour {
 	public void destroyTrash(){
 		//Updates the total money with the trash item value
 		totalMoney = int.Parse (totalMoneyText.text);
-		totalMoney += hList[current].value;
+		totalMoney += im.items[current].value;
+		//Debug.Log ("Item " + current + " value is " + im.items[current].value);
 		totalMoneyText.text = "" + totalMoney;
 	}
 
