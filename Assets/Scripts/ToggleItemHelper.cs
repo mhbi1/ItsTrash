@@ -9,6 +9,7 @@ public class ToggleItemHelper : MonoBehaviour {
 	public Button itemBtn;
 	public GameObject itemPanel;
 	public GameObject helperPanel;
+	public GameObject itemValues;
 
 	// Mouse Clicking
 	void Start(){
@@ -18,21 +19,23 @@ public class ToggleItemHelper : MonoBehaviour {
 		btn2.onClick.AddListener(toggleHelper);
 	}
 
-	//Toggle = True
+	//Toggle = Items Panel active
 	void toggleItem(){
 		if (!toggled) {
 			toggled = true;
 			itemPanel.SetActive (true);
 			helperPanel.SetActive (false);
+			itemValues.SetActive (true);
 		} 
 	}
 
-	//Toggle = False
+	//Toggle = Helper Panel active
 	void toggleHelper(){
 		if (toggled) {
 			toggled = false;
 			helperPanel.SetActive (true);
 			itemPanel.SetActive (false);
+			itemValues.SetActive (false);
 		}
 	}
 }
