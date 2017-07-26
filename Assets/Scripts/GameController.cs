@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
 	public Button[] helperButtons;
 	public GameObject item;
 	public Text totalMoneyText;
+	public Text[] helperNum;
 	public Helper[] hList;
 	public ItemManager im;
 	public int totalMoney;
@@ -22,14 +23,8 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Initialize a new array 
-		hList = new Helper[10];
-		for(int h = 0; h < hList.Length; h++){
-			hList[h] = new Helper();
-			hList[h].value = 1;
-			hList[h].num = 0;
-		}
-		Button btn = helperButtons[0].GetComponent<Button> ();
-		btn.onClick.AddListener(addHelper);
+		hList = new Helper[9];
+		setupHelpers ();
 	}
 
 	// Update is called once per frame
@@ -48,6 +43,7 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
+		//Don't need?
 		//Finger Pressing
 		/*for (var i = 0; i < Input.touchCount; i++) {
 			if (Input.GetTouch(i).phase == TouchPhase.Began) {
@@ -74,11 +70,6 @@ public class GameController : MonoBehaviour {
 
 	}
 
-	void addHelper(){
-		//Check to see player has enough money to buy
-		hList[current].num ++;
-	}
-
 	public void destroyTrash(){
 		//Updates the total money with the trash item value
 		totalMoney = int.Parse (totalMoneyText.text);
@@ -87,7 +78,35 @@ public class GameController : MonoBehaviour {
 		totalMoneyText.text = "" + totalMoney;
 	}
 
+	void setupHelpers() {
+		//Initiate new array of helpers
+		//Adds functionality to all buttons and sets up text
+		for (int h = 0; h < hList.Length; h++) {
+			hList [h] = new Helper ();
+			hList [h].num = 0;
+			Button btn = helperButtons [h].GetComponent<Button> ();
+			btn.onClick.AddListener (addHelper);
+			helperNum [h].text = "x" + hList [h].num;
+		}
+		//Manually set values of helpers
+		hList [0].value = 1;
+		hList [1].value = 5;
+		hList [2].value = 25;
+		hList [3].value = 500;
+		hList [4].value = 800;
+		hList [5].value = 1500;
+		hList [6].value = 10000;
+		hList [7].value = 500000;
+		hList [8].value = 1000000;
+	}
+
+	void addHelper(){
+		//Check to see player has enough money to buy
+		hList[current].num ++;
+	}
+
 	int getHelper(int n){
 		return 0;
 	}
+
 }
