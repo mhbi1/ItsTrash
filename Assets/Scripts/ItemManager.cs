@@ -74,6 +74,10 @@ public class ItemManager : MonoBehaviour {
 		}
 	}
 
+	public bool isBought(int i) {
+		return items [i].bought;
+	}
+
 	public GameObject getItem(){
 		return items [current].prefab;
 	}

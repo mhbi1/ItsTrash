@@ -6,6 +6,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Helper {
 	public int value;
+	public int pValue;
 	public int num;
 }
 
@@ -14,6 +15,7 @@ public class GameController : MonoBehaviour {
 	public GameObject item;
 	public Text totalMoneyText;
 	public Text[] helperNum;
+	public Text[] helperCost;
 	public Helper[] hList;
 	public ItemManager im;
 	public int totalMoney;
@@ -85,7 +87,8 @@ public class GameController : MonoBehaviour {
 			hList [h] = new Helper ();
 			hList [h].num = 0;
 			Button btn = helperButtons [h].GetComponent<Button> ();
-			btn.onClick.AddListener (addHelper);
+			int temp = h;
+			btn.onClick.AddListener (delegate{addHelper(temp);});
 			helperNum [h].text = "x" + hList [h].num;
 		}
 		//Manually set values of helpers
@@ -98,11 +101,27 @@ public class GameController : MonoBehaviour {
 		hList [6].value = 10000;
 		hList [7].value = 500000;
 		hList [8].value = 1000000;
+
+		for(int h = 0; h < hList.Length; h++){
+			hList[h].pValue = hList[h].value * 2;
+			helperCost [h].text = hList [h].pValue.ToString ();
+		}
+
 	}
 
-	void addHelper(){
-		//Check to see player has enough money to buy
-		hList[current].num ++;
+	void addHelper(int c){
+		//Check to see player has enough money to buy and if item is bought
+		current = c;
+		if (totalMoney >= hList [current].pValue && im.isBought (current)) {
+			hList[current].num ++;
+			totalMoney -= hList [current].pValue;
+			totalMoneyText.text = totalMoney.ToString ();
+			hList [current].pValue = hList [current].pValue * 2;
+			helperCost [current].text = hList[current].pValue + "";
+		}
+		for(int h = 0; h < hList.Length; h++) {
+			helperNum [h].text = "x" + hList [h].num;
+		}
 	}
 
 	int getHelper(int n){

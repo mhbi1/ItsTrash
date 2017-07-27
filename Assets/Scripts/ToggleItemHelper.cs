@@ -25,7 +25,6 @@ public class ToggleItemHelper : MonoBehaviour {
 			toggled = true;
 			itemPanel.SetActive (true);
 			helperPanel.SetActive (false);
-			itemValues.SetActive (true);
 		} 
 	}
 
@@ -35,7 +34,6 @@ public class ToggleItemHelper : MonoBehaviour {
 			toggled = false;
 			helperPanel.SetActive (true);
 			itemPanel.SetActive (false);
-			itemValues.SetActive (false);
 		}
 	}
 }
