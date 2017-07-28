@@ -10,9 +10,10 @@ public class DestroyTrash : MonoBehaviour {
 		GameObject gcObject = GameObject.FindGameObjectWithTag ("GameController");
 		gc = gcObject.GetComponent<GameController> ();
 	}
-	// Destroys item while getting money
+
+	// Destroys item and updates total money
 	void OnTriggerEnter2D(Collider2D other){
 		Destroy (other.gameObject);
-		gc.destroyTrash ();
+		gc.updateTotal ();
 	}
 }

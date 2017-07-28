@@ -22,7 +22,6 @@ public class GameController : MonoBehaviour {
 	int current = 0;
 	float time = 0.0f;
 
-	// Use this for initialization
 	void Start () {
 		//Initialize a new array 
 		hList = new Helper[9];
@@ -35,7 +34,7 @@ public class GameController : MonoBehaviour {
 		current = im.current;
 		//Mouse clicking
 		if (Input.GetMouseButtonDown (0)){
-			Debug.Log ("Button pressed.");
+			//Debug.Log ("Button pressed.");
 			var mousePos = Input.mousePosition;
 			mousePos.z = 1.0f;
 			var objectPos = Camera.main.ScreenToWorldPoint (mousePos);
@@ -57,7 +56,7 @@ public class GameController : MonoBehaviour {
 		}*/
 
 		time += Time.deltaTime;
-		//Checks for time constraint, if met loop through array of helpers
+		//Checks for time constraint. if met, loop through array of helpers
 		if (time > 5) {
 			foreach (Helper h in hList) {
 				if (h.num > 0){
@@ -72,7 +71,7 @@ public class GameController : MonoBehaviour {
 
 	}
 
-	public void destroyTrash(){
+	public void updateTotal(){
 		//Updates the total money with the trash item value
 		totalMoney = int.Parse (totalMoneyText.text);
 		totalMoney += im.items[current].value;
@@ -101,10 +100,10 @@ public class GameController : MonoBehaviour {
 		hList [6].value = 10000;
 		hList [7].value = 500000;
 		hList [8].value = 1000000;
-
+		//Sets up cost for helpers
 		for(int h = 0; h < hList.Length; h++){
 			hList[h].pValue = hList[h].value * 2;
-			helperCost [h].text = hList [h].pValue.ToString ();
+			helperCost [h].text = "$ " + hList [h].pValue.ToString ();
 		}
 
 	}
@@ -117,15 +116,25 @@ public class GameController : MonoBehaviour {
 			totalMoney -= hList [current].pValue;
 			totalMoneyText.text = totalMoney.ToString ();
 			hList [current].pValue = hList [current].pValue * 2;
-			helperCost [current].text = hList[current].pValue + "";
+			helperCost [current].text = "$ " + hList[current].pValue;
 		}
+		//Updates amount of helpers bought
 		for(int h = 0; h < hList.Length; h++) {
 			helperNum [h].text = "x" + hList [h].num;
 		}
 	}
 
-	int getHelper(int n){
-		return 0;
-	}
+	//Save for later
+	//Takes the amount and formats it by shortening the amount
+	string formatMoney(string m){
+		/*     10K  - 10,000
+		 	   100K - 100,000
+		       1M   - 1,000,000
+		       1B   - 1,000,000,000
+		 * */
+		string amount = "";
 
+
+		return amount;
+	}
 }

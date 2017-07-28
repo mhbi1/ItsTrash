@@ -28,10 +28,10 @@ public class ItemManager : MonoBehaviour {
 	public Text totalMoneyText;
 	public int current;
 
-	// Use this for initialization
 	void Start () {
 		current = 0;
 		//items = new Item[9];
+		//Adds functionality to items and initiates items
 		for(int i = 0; i < items.Length; i++) {
 			Button btn = items [i].name.GetComponent<Button> ();
 			int temp = i;
@@ -43,25 +43,21 @@ public class ItemManager : MonoBehaviour {
 			}
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+	void Update () {}
 
 	void changeItem(int c){
-		//Check to see if bought or not
+		//Check to see if item is bought or not
 		if (items [c].bought) {
 			Debug.Log ("Item already bought.");
 			current = c;
 		} else {
 			buyItem (c);
 		}
-		//If bought, change to item
-		//If not, check to see if player has enough money to buy
 	}
 
 	void buyItem(int c){
+		//Check to see if player has enough money to buy
 		int totalMoney = int.Parse (totalMoneyText.text);
 		if (totalMoney >= items [c].value) {
 			items [c].bought = true;
