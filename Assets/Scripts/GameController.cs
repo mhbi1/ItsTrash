@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 [System.Serializable]
 public class Helper {
@@ -12,17 +13,24 @@ public class Helper {
 
 public class GameController : MonoBehaviour {
 	public Button[] helperButtons;
+	public Button menu;
+	public GameObject menuPanel;
 	public GameObject item;
+	public Text gpsText;
 	public Text totalMoneyText;
 	public Text[] helperNum;
 	public Text[] helperCost;
 	public Helper[] hList;
 	public ItemManager im;
 	public int totalMoney;
+	public int prestige = 0;
+	int gps;
 	int current = 0;
 	float time = 0.0f;
 
 	void Start () {
+		Button btn = menu.GetComponent<Button> ();
+		btn.onClick.AddListener (showMenu);
 		//Initialize a new array 
 		hList = new Helper[9];
 		setupHelpers ();
@@ -33,7 +41,7 @@ public class GameController : MonoBehaviour {
 	//Creates the trash item
 		current = im.current;
 		//Mouse clicking
-		if (Input.GetMouseButtonDown (0)){
+		if (Input.GetMouseButtonDown (0) && !EventSystem.current.IsPointerOverGameObject()){
 			//Debug.Log ("Button pressed.");
 			var mousePos = Input.mousePosition;
 			mousePos.z = 1.0f;
@@ -69,6 +77,8 @@ public class GameController : MonoBehaviour {
 			time = 0;
 		}
 
+		gpsText.text = "$" + gps + " every 30 seconds";
+
 	}
 
 	public void updateTotal(){
@@ -77,6 +87,10 @@ public class GameController : MonoBehaviour {
 		totalMoney += im.items[current].value;
 		//Debug.Log ("Item " + current + " value is " + im.items[current].value);
 		totalMoneyText.text = "" + totalMoney;
+	}
+
+	void showMenu(){
+		menuPanel.SetActive (true);
 	}
 
 	void setupHelpers() {
@@ -97,7 +111,7 @@ public class GameController : MonoBehaviour {
 		hList [3].value = 500;
 		hList [4].value = 800;
 		hList [5].value = 1500;
-		hList [6].value = 10000;
+		hList [6].value = 20000;
 		hList [7].value = 500000;
 		hList [8].value = 1000000;
 		//Sets up cost for helpers
@@ -112,15 +126,18 @@ public class GameController : MonoBehaviour {
 		//Check to see player has enough money to buy and if item is bought
 		current = c;
 		if (totalMoney >= hList [current].pValue && im.isBought (current)) {
+			gps = 0;
 			hList[current].num ++;
 			totalMoney -= hList [current].pValue;
 			totalMoneyText.text = totalMoney.ToString ();
 			hList [current].pValue = hList [current].pValue * 2;
 			helperCost [current].text = "$ " + hList[current].pValue;
-		}
-		//Updates amount of helpers bought
-		for(int h = 0; h < hList.Length; h++) {
-			helperNum [h].text = "x" + hList [h].num;
+
+			//Updates amount of helpers bought
+			for(int h = 0; h < hList.Length; h++) {
+				helperNum [h].text = "x" + hList [h].num;
+				gps += hList [h].num * hList [h].value;
+			}
 		}
 	}
 
