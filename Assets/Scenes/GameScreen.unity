@@ -468,8 +468,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14, y: 19}
-  m_SizeDelta: {x: 544, y: 343}
+  m_AnchoredPosition: {x: 14, y: 155}
+  m_SizeDelta: {x: 544, y: 71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &81613913
 MonoBehaviour:
@@ -503,14 +503,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Too easy? BUY A TIME MACHINE!
+  m_Text: 'Too easy? BUY A TIME MACHINE! You only need 1 billion dollars
 
 
 
 
 
-    WARNING: Value of items drop and item successfully bought percentage goes down
-    20% per time machine.'
+'
 --- !u!222 &81613914
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -995,7 +994,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36928728, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 142, y: -52.000008}
+  m_AnchoredPosition: {x: 141.99998, y: -52.000008}
   m_SizeDelta: {x: -13, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &268730654
@@ -2021,7 +2020,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 464854560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1973722862}
@@ -2179,7 +2178,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36928728, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 320.00006, y: 146}
+  m_AnchoredPosition: {x: 320.0001, y: 146}
   m_SizeDelta: {x: -13, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &491987926
@@ -2694,8 +2693,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 116, y: 88}
-  m_SizeDelta: {x: 41, y: 44}
+  m_AnchoredPosition: {x: 131, y: 88}
+  m_SizeDelta: {x: 65, y: 44}
   m_Pivot: {x: 0.6355417, y: 0.5}
 --- !u!114 &736747658
 MonoBehaviour:
@@ -3217,6 +3216,81 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 798049558}
+--- !u!1 &869517874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 869517875}
+  - component: {fileID: 869517877}
+  - component: {fileID: 869517876}
+  m_Layer: 5
+  m_Name: Prestige Warning
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &869517875
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 869517874}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1026053836}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 31, y: -24}
+  m_SizeDelta: {x: 525, y: 113}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &869517876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 869517874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 32
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'WARNING: Value of items drop and item successfully bought percentage goes
+    down 20% per time machine.'
+--- !u!222 &869517877
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 869517874}
 --- !u!1 &879955455
 GameObject:
   m_ObjectHideFlags: 0
@@ -3604,7 +3678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1026053836
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3619,6 +3693,8 @@ RectTransform:
   - {fileID: 1973722862}
   - {fileID: 1256323147}
   - {fileID: 81613912}
+  - {fileID: 1429431701}
+  - {fileID: 869517875}
   m_Father: {fileID: 1073855728}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3635,14 +3711,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1026053835}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f579c8cd0e874c58812e07742726472, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b541787e27334798b0949052b1c329b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitBtn: {fileID: 1256323148}
-  prestigeBtn: {fileID: 0}
-  creditsBtn: {fileID: 1973722863}
-  settingsBtn: {fileID: 0}
-  menuPanel: {fileID: 1026053835}
+  backBtn: {fileID: 1256323148}
+  resetBtn: {fileID: 1973722863}
+  menuPanel: {fileID: 2058128828}
+  prestigePanel: {fileID: 1026053835}
+  gc: {fileID: 1084154304}
+  tmText: {fileID: 1429431702}
 --- !u!114 &1026053838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3862,6 +3939,7 @@ MonoBehaviour:
   - {fileID: 1878190221}
   menu: {fileID: 1993140105}
   menuPanel: {fileID: 2058128828}
+  prestigePanel: {fileID: 1026053835}
   item: {fileID: 1891696553566110, guid: b7c5b04f983f64aac8158d5e5ca2f3ac, type: 2}
   gpsText: {fileID: 1600605678}
   totalMoneyText: {fileID: 1533573097}
@@ -3888,7 +3966,6 @@ MonoBehaviour:
   hList: []
   im: {fileID: 1084154305}
   totalMoney: 0
-  prestige: 0
 --- !u!114 &1084154305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3904,50 +3981,52 @@ MonoBehaviour:
   - name: {fileID: 660887702}
     prefab: {fileID: 1891696553566110, guid: b7c5b04f983f64aac8158d5e5ca2f3ac, type: 2}
     value: 1
-    pValue: 0
     bought: 0
   - name: {fileID: 1964957099}
     prefab: {fileID: 1275937524657284, guid: a0744c47d05734e4e8fd5f5f026bdc87, type: 2}
     value: 5
-    pValue: 0
     bought: 0
   - name: {fileID: 1877514685}
     prefab: {fileID: 1110921416147432, guid: f74132418ab8248759909d9079b70e5e, type: 2}
     value: 25
-    pValue: 0
     bought: 0
   - name: {fileID: 941771917}
     prefab: {fileID: 1244104267940616, guid: df1b6c8442222413a866e413a0373f45, type: 2}
     value: 500
-    pValue: 0
     bought: 0
   - name: {fileID: 959471319}
     prefab: {fileID: 1772540113929916, guid: db023e59cd55e4ce99d47b231b3ff5c8, type: 2}
     value: 800
-    pValue: 0
     bought: 0
   - name: {fileID: 129660664}
     prefab: {fileID: 1454320806430748, guid: 9cdfc976891e14813adde95d7e263c37, type: 2}
     value: 1500
-    pValue: 0
     bought: 0
   - name: {fileID: 354324796}
     prefab: {fileID: 1867618017314630, guid: 70e0a2d52da45492ea7067724f7b190b, type: 2}
-    value: 10000
-    pValue: 0
+    value: 20000
     bought: 0
   - name: {fileID: 1579353537}
     prefab: {fileID: 1938431822619918, guid: 525835e3b7fa44aebb500abc183990c9, type: 2}
     value: 500000
-    pValue: 0
     bought: 0
   - name: {fileID: 2012704441}
     prefab: {fileID: 1196274013375050, guid: 7a226485f010e442cb6e06e3ba663305, type: 2}
     value: 1000000
-    pValue: 0
     bought: 0
+  itemValues:
+  - {fileID: 136470622}
+  - {fileID: 736747658}
+  - {fileID: 1697053852}
+  - {fileID: 1435608817}
+  - {fileID: 294014406}
+  - {fileID: 197699881}
+  - {fileID: 1245665042}
+  - {fileID: 1908847267}
+  - {fileID: 1964894509}
   totalMoneyText: {fileID: 1533573097}
   current: 0
+  prestige: 0
 --- !u!1 &1094936420
 GameObject:
   m_ObjectHideFlags: 0
@@ -4811,7 +4890,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36928728, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -271, y: 146}
+  m_AnchoredPosition: {x: -270.99997, y: 146}
   m_SizeDelta: {x: -13, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1418101698
@@ -4964,6 +5043,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1419096842}
+--- !u!1 &1429431700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1429431701}
+  - component: {fileID: 1429431703}
+  - component: {fileID: 1429431702}
+  m_Layer: 5
+  m_Name: TMs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1429431701
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1429431700}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1026053836}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 77, y: -188}
+  m_SizeDelta: {x: 87, y: 70}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1429431702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1429431700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 48
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 48
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: x0
+--- !u!222 &1429431703
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1429431700}
 --- !u!1 &1435608815
 GameObject:
   m_ObjectHideFlags: 0
@@ -6336,7 +6489,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36928728, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 176.00006, y: 146}
+  m_AnchoredPosition: {x: 176.00005, y: 146}
   m_SizeDelta: {x: -14, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1792430149
@@ -6786,7 +6939,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36928728, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 310, y: -51.999992}
+  m_AnchoredPosition: {x: 310.00003, y: -51.999992}
   m_SizeDelta: {x: -13, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1878190221
@@ -7045,7 +7198,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36928728, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -123.99997, y: 146}
+  m_AnchoredPosition: {x: -123.999985, y: 146}
   m_SizeDelta: {x: -13, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1958666499
@@ -7957,6 +8110,7 @@ MonoBehaviour:
   creditsBtn: {fileID: 782517024}
   settingsBtn: {fileID: 0}
   menuPanel: {fileID: 2058128828}
+  prestigePanel: {fileID: 1026053835}
 --- !u!1 &2058736713
 GameObject:
   m_ObjectHideFlags: 0

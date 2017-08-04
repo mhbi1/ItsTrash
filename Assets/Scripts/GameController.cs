@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
 	public Button[] helperButtons;
 	public Button menu;
 	public GameObject menuPanel;
+	public GameObject prestigePanel;
 	public GameObject item;
 	public Text gpsText;
 	public Text totalMoneyText;
@@ -22,8 +23,7 @@ public class GameController : MonoBehaviour {
 	public Text[] helperCost;
 	public Helper[] hList;
 	public ItemManager im;
-	public int totalMoney;
-	public int prestige = 0;
+	public double totalMoney;
 	int gps;
 	int current = 0;
 	float time = 0.0f;
@@ -83,12 +83,35 @@ public class GameController : MonoBehaviour {
 
 	public void updateTotal(){
 		//Updates the total money with the trash item value
-		totalMoney = int.Parse (totalMoneyText.text);
+		totalMoney = double.Parse (totalMoneyText.text);
 		totalMoney += im.items[current].value;
-		//Debug.Log ("Item " + current + " value is " + im.items[current].value);
+		Debug.Log ("Item " + current + " value is " + im.items[current].value);
 		totalMoneyText.text = "" + totalMoney;
 	}
 
+	public void resetGame() {
+		totalMoney = 0.0;
+		totalMoneyText.text = "0";
+		gps = 0;
+		gpsText.text = "0";
+		im.updateItemValues ();
+		prestigePanel.SetActive (false);
+	}
+		
+	//Upgrade prestige
+	public void buyTM(){
+		im.prestige++;
+		Debug.Log ("Prestige is " + getPrestige ());
+	}
+
+	public int getPrestige(){
+		return im.getPrestige ();
+	}
+
+	public void setItemValues() {
+		im.updateValues ();
+	}
+		
 	void showMenu(){
 		menuPanel.SetActive (true);
 	}
@@ -121,6 +144,7 @@ public class GameController : MonoBehaviour {
 		}
 
 	}
+
 
 	void addHelper(int c){
 		//Check to see player has enough money to buy and if item is bought

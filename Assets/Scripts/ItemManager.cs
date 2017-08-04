@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class Item{
 	public Button name;
 	public GameObject prefab;
-	public int value;
-	public int pValue;
+	public double value;
+	//public int pValue;
 	public bool bought;
 }
 
@@ -25,8 +25,10 @@ public class Item{
 
 public class ItemManager : MonoBehaviour {
 	public Item[] items;
+	public Text[] itemValues;
 	public Text totalMoneyText;
 	public int current;
+	public int prestige = 0;
 
 	void Start () {
 		current = 0;
@@ -58,7 +60,7 @@ public class ItemManager : MonoBehaviour {
 
 	void buyItem(int c){
 		//Check to see if player has enough money to buy
-		int totalMoney = int.Parse (totalMoneyText.text);
+		double totalMoney = double.Parse (totalMoneyText.text);
 		if (totalMoney >= items [c].value) {
 			items [c].bought = true;
 			totalMoney -= items [c].value;
@@ -76,5 +78,30 @@ public class ItemManager : MonoBehaviour {
 
 	public GameObject getItem(){
 		return items [current].prefab;
+	}
+
+	public int getPrestige() {
+		return prestige;
+	}
+
+	//Manually set values of items depending on prestige
+	public void updateValues() {
+		if (prestige == 1) {
+			items [0].value = .50;
+			items [1].value = 2.50;
+			items [2].value = 12.50;
+			items [3].value = 250;
+			items [4].value = 500;
+			items [5].value = 1250;
+			items [6].value = 10000;
+			items [7].value = 400000;
+			items [8].value = 750000;
+		}
+	}
+
+	public void updateItemValues() {
+		for(int t = 0; t < itemValues.Length; t++) {
+			itemValues [t].text = "" + items [t].value;
+		}
 	}
 }
