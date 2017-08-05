@@ -69,24 +69,25 @@ public class GameController : MonoBehaviour {
 			foreach (Helper h in hList) {
 				if (h.num > 0){
 					// If helpers exist, multiply value of item by number and add to total
-					int aValue = h.value * h.num;
-					aValue = int.Parse(totalMoneyText.text) + aValue;
+					double aValue = h.value * h.num;
+					aValue = totalMoney + aValue;
 					totalMoneyText.text = aValue.ToString ();
 				}
 			}
 			time = 0;
 		}
 
-		gpsText.text = "$" + gps + " every 30 seconds";
+		gpsText.text = "$" + formatMoney(gps) + " every 30 seconds";
 
 	}
 
 	public void updateTotal(){
 		//Updates the total money with the trash item value
-		totalMoney = double.Parse (totalMoneyText.text);
+		//totalMoney = double.Parse (totalMoneyText.text);
 		totalMoney += im.items[current].value;
-		Debug.Log ("Item " + current + " value is " + im.items[current].value);
-		totalMoneyText.text = "" + totalMoney;
+		//Debug.Log ("Item " + current + " value is " + im.items[current].value);
+		Debug.Log ("totalMoney is " + totalMoney);
+		totalMoneyText.text =  formatMoney(totalMoney);
 	}
 
 	public void resetGame() {
@@ -101,7 +102,7 @@ public class GameController : MonoBehaviour {
 	//Upgrade prestige
 	public void buyTM(){
 		im.prestige++;
-		Debug.Log ("Prestige is " + getPrestige ());
+		//Debug.Log ("Prestige is " + getPrestige ());
 	}
 
 	public int getPrestige(){
@@ -136,11 +137,11 @@ public class GameController : MonoBehaviour {
 		hList [5].value = 1500;
 		hList [6].value = 20000;
 		hList [7].value = 500000;
-		hList [8].value = 1000000;
+		hList [8].value = 10000000;
 		//Sets up cost for helpers
 		for(int h = 0; h < hList.Length; h++){
 			hList[h].pValue = hList[h].value * 2;
-			helperCost [h].text = "$ " + hList [h].pValue.ToString ();
+			helperCost [h].text = "$ " + formatMoney(hList [h].pValue);
 		}
 
 	}
@@ -153,9 +154,9 @@ public class GameController : MonoBehaviour {
 			gps = 0;
 			hList[current].num ++;
 			totalMoney -= hList [current].pValue;
-			totalMoneyText.text = totalMoney.ToString ();
+			totalMoneyText.text = formatMoney (totalMoney);
 			hList [current].pValue = hList [current].pValue * 2;
-			helperCost [current].text = "$ " + hList[current].pValue;
+			helperCost [current].text = "$ " + formatMoney (hList[current].pValue);
 
 			//Updates amount of helpers bought
 			for(int h = 0; h < hList.Length; h++) {
@@ -167,14 +168,25 @@ public class GameController : MonoBehaviour {
 
 	//Save for later
 	//Takes the amount and formats it by shortening the amount
-	string formatMoney(string m){
+	public string formatMoney(double m){
 		/*     10K  - 10,000
 		 	   100K - 100,000
 		       1M   - 1,000,000
 		       1B   - 1,000,000,000
 		 * */
 		string amount = "";
-
+		if (m >= 10000 && m < 1000000) {
+			m = m / 1000;
+			amount = m + "K";
+		} else if (m >= 1000000 && m < 1000000000) {
+			m = m / 1000000;
+			amount = m + "M";
+		} else if (m >= 1000000000 ) {
+			m = m / 1000000000;
+			amount = m + "B";
+		} else {
+			amount = "" + m;
+		}
 
 		return amount;
 	}

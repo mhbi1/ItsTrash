@@ -29,6 +29,7 @@ public class ItemManager : MonoBehaviour {
 	public Text totalMoneyText;
 	public int current;
 	public int prestige = 0;
+	public GameController gc;
 
 	void Start () {
 		current = 0;
@@ -60,11 +61,11 @@ public class ItemManager : MonoBehaviour {
 
 	void buyItem(int c){
 		//Check to see if player has enough money to buy
-		double totalMoney = double.Parse (totalMoneyText.text);
-		if (totalMoney >= items [c].value) {
+		//double totalMoney = double.Parse (totalMoneyText.text);
+		if (gc.totalMoney >= items [c].value) {
 			items [c].bought = true;
-			totalMoney -= items [c].value;
-			totalMoneyText.text = totalMoney.ToString ();
+			gc.totalMoney -= items [c].value;
+			totalMoneyText.text = gc.formatMoney (gc.totalMoney);
 			current = c;
 			Debug.Log ("Item successfully bought.");
 		} else {
@@ -95,13 +96,55 @@ public class ItemManager : MonoBehaviour {
 			items [5].value = 1250;
 			items [6].value = 10000;
 			items [7].value = 400000;
+			items [8].value = 7500000;
+		}else if (prestige == 2) {
+			items [0].value = .25;
+			items [1].value = 1.25;
+			items [2].value = 6.25;
+			items [3].value = 125;
+			items [4].value = 400;
+			items [5].value = 1000;
+			items [6].value = 7500;
+			items [7].value = 300000;
+			items [8].value = 5000000;
+		}else if (prestige == 3) {
+			items [0].value = .10;
+			items [1].value = .75;
+			items [2].value = 3.75;
+			items [3].value = 75;
+			items [4].value = 300;
+			items [5].value = 750;
+			items [6].value = 5000;
+			items [7].value = 200000;
+			items [8].value = 2500000;
+		}else if (prestige == 4) {
+			items [0].value = .05;
+			items [1].value = .50;
+			items [2].value = 2.50;
+			items [3].value = 50;
+			items [4].value = 200;
+			items [5].value = 500;
+			items [6].value = 2500;
+			items [7].value = 100000;
+			items [8].value = 1250000;
+		}else if (prestige == 5) {
+			items [0].value = .01;
+			items [1].value = .25;
+			items [2].value = 1.25;
+			items [3].value = 25;
+			items [4].value = 100;
+			items [5].value = 250;
+			items [6].value = 1000;
+			items [7].value = 50000;
 			items [8].value = 750000;
 		}
 	}
 
 	public void updateItemValues() {
+		GameController gc = new GameController();
 		for(int t = 0; t < itemValues.Length; t++) {
-			itemValues [t].text = "" + items [t].value;
+			string shrt = gc.formatMoney (items [t].value);
+			itemValues [t].text = shrt;
 		}
 	}
 }
