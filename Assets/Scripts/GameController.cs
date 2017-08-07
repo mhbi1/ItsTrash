@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour {
 	public Helper[] hList;
 	public ItemManager im;
 	public double totalMoney;
+	GameObject[] itemPool = new GameObject[20];
 	int gps;
 	int current = 0;
 	float time = 0.0f;
@@ -51,6 +52,7 @@ public class GameController : MonoBehaviour {
 				Instantiate (item, objectPos, Quaternion.identity);
 			}
 		}
+		//Instead of instantiating, have a pool of items that is moved to the location of the mousePos
 
 		//Don't need?
 		//Finger Pressing
@@ -70,8 +72,8 @@ public class GameController : MonoBehaviour {
 				if (h.num > 0){
 					// If helpers exist, multiply value of item by number and add to total
 					double aValue = h.value * h.num;
-					aValue = totalMoney + aValue;
-					totalMoneyText.text = aValue.ToString ();
+					totalMoney = totalMoney + aValue;
+					totalMoneyText.text = formatMoney (totalMoney);
 				}
 			}
 			time = 0;
@@ -79,6 +81,13 @@ public class GameController : MonoBehaviour {
 
 		gpsText.text = "$" + formatMoney(gps) + " every 30 seconds";
 
+	}
+
+	void setupPool(){
+		foreach (GameObject g in itemPool) {
+			//var objectPos = (20, -20, 0);
+			//Instantiate (item, [20 -20 0], Quaternion.identity);
+		}
 	}
 
 	public void updateTotal(){
@@ -97,6 +106,13 @@ public class GameController : MonoBehaviour {
 		gpsText.text = "0";
 		im.updateItemValues ();
 		prestigePanel.SetActive (false);
+		for (int i = 1; i < im.items.Length; i++) {
+			im.items [i].bought = false;
+		}
+		foreach (Helper h in hList) {
+			h.num = 0;
+		}
+		//Delete all objects currently in game
 	}
 		
 	//Upgrade prestige
@@ -180,6 +196,7 @@ public class GameController : MonoBehaviour {
 			amount = m + "K";
 		} else if (m >= 1000000 && m < 1000000000) {
 			m = m / 1000000;
+			//Round number
 			amount = m + "M";
 		} else if (m >= 1000000000 ) {
 			m = m / 1000000000;

@@ -18,7 +18,6 @@ public class MenuController : MonoBehaviour {
 		//Button btn3 = creditsBtn.GetComponent<Button> ();
 		btn.onClick.AddListener (exitMenu);
 		btn2.onClick.AddListener (showPrestige);
-		
 	}
 	
 	void exitMenu() {

@@ -87,6 +87,7 @@ public class ItemManager : MonoBehaviour {
 
 	//Manually set values of items depending on prestige
 	public void updateValues() {
+		current = 0;
 		if (prestige == 1) {
 			items [0].value = .50;
 			items [1].value = 2.50;
@@ -141,7 +142,6 @@ public class ItemManager : MonoBehaviour {
 	}
 
 	public void updateItemValues() {
-		GameController gc = new GameController();
 		for(int t = 0; t < itemValues.Length; t++) {
 			string shrt = gc.formatMoney (items [t].value);
 			itemValues [t].text = shrt;
