@@ -60,7 +60,7 @@ public class ItemManager : MonoBehaviour {
 		items[0].cValue = 1.0f;
 		items[0].rValue = 1.0f;
 		items[0].dValue = .05f;
-		items [0].stock = 15;
+		items [0].stock = 20;
 		Button btn1 = items[0].name.GetComponent<Button> ();
 		Button btn2 = items[0].buyItem.GetComponent<Button> ();
 		btn1.onClick.AddListener (delegate{changeItem(0);});
@@ -176,11 +176,11 @@ public class ItemManager : MonoBehaviour {
 			items[6-8] get 5 more stock
 			*/
 		if (current < 3) {
-			return 15;
+			return 20;
 		} else if (current < 6) {
-			return 10;
+			return 15;
 		} else {
-			return 5;
+			return 10;
 		}
 	}
 

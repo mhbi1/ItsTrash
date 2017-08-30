@@ -9,7 +9,6 @@ public class ToggleItemHelper : MonoBehaviour {
 	public Button itemBtn;
 	public GameObject itemPanel;
 	public GameObject helperPanel;
-	public GameObject itemValues;
 
 	// Mouse Clicking
 	void Start(){
