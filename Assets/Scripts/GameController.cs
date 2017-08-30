@@ -17,13 +17,18 @@ public class GameController : MonoBehaviour {
 	public GameObject menuPanel;
 	public GameObject prestigePanel;
 	public GameObject item;
+	public Image currentItemImage;
 	public Text gpsText;
 	public Text totalMoneyText;
+	public Text notificationText;
+	public Text currentItemStock;
+	public Text currentItemName;
+	public Text currentItemValue;
 	public Text[] helperNum;
 	public Text[] helperCost;
 	public Helper[] hList;
 	public ItemManager im;
-	public double totalMoney;
+	public float totalMoney;
 	GameObject[] itemPool = new GameObject[20];
 	int gps;
 	int current = 0;
@@ -35,11 +40,12 @@ public class GameController : MonoBehaviour {
 		//Initialize a new array 
 		hList = new Helper[9];
 		setupHelpers ();
+		getCurrentItemInfo ();
 	}
 
 	// Update is called once per frame
 	void Update (){
-	//Creates the trash item
+		//Creates the trash item
 		current = im.current;
 		//Mouse clicking
 		if (Input.GetMouseButtonDown (0) && !EventSystem.current.IsPointerOverGameObject()){
@@ -49,7 +55,13 @@ public class GameController : MonoBehaviour {
 			var objectPos = Camera.main.ScreenToWorldPoint (mousePos);
 			if (objectPos.y > 1.5) {
 				item = im.getItem ();
-				Instantiate (item, objectPos, Quaternion.identity);
+				if (im.hasStock (current)) {
+					im.subtractStock ();
+					getCurrentItemInfo ();
+					Instantiate (item, objectPos, Quaternion.identity);
+				} else {
+					notificationText.text = "No more " + im.getName () + "s.";
+				}
 			}
 		}
 		//Instead of instantiating, have a pool of items that is moved to the location of the mousePos
@@ -61,26 +73,36 @@ public class GameController : MonoBehaviour {
 				var touchPos : Vector3 = Input.GetTouch(i).position;
 				touchPos.z = 4.0;
 				var createPos = myCam.ScreenToWorldPoint(touchPos);
-				Instantiate (projectile, createPos, Quaternion.identity);
+				if (objectPos.y > 1.5) {
+					item = im.getItem ();
+					Instantiate (item, objectPos, Quaternion.identity);
+				}
 			}
 		}*/
 
+		//---------Trash helpers---------------
 		time += Time.deltaTime;
 		//Checks for time constraint. if met, loop through array of helpers
 		if (time > 5) {
 			foreach (Helper h in hList) {
 				if (h.num > 0){
 					// If helpers exist, multiply value of item by number and add to total
-					double aValue = h.value * h.num;
+					float aValue = h.value * h.num;
 					totalMoney = totalMoney + aValue;
 					totalMoneyText.text = formatMoney (totalMoney);
 				}
 			}
 			time = 0;
 		}
-
 		gpsText.text = "$" + formatMoney(gps) + " every 30 seconds";
 
+	}
+
+	public void getCurrentItemInfo() {
+		currentItemName.text = im.getName ();
+		currentItemStock.text = "x" + im.getStock ();
+		currentItemValue.text = formatMoney (im.getValue ());
+		currentItemImage.sprite = im.getItem ().GetComponent<SpriteRenderer>().sprite;
 	}
 
 	void setupPool(){
@@ -92,22 +114,23 @@ public class GameController : MonoBehaviour {
 
 	public void updateTotal(){
 		//Updates the total money with the trash item value
-		//totalMoney = double.Parse (totalMoneyText.text);
-		totalMoney += im.items[current].value;
+		//totalMoney = float.Parse (totalMoneyText.text);
+		totalMoney += im.currentItem.value;
 		//Debug.Log ("Item " + current + " value is " + im.items[current].value);
-		Debug.Log ("totalMoney is " + totalMoney);
+		//Debug.Log ("totalMoney is " + totalMoney);
 		totalMoneyText.text =  formatMoney(totalMoney);
 	}
 
 	public void resetGame() {
-		totalMoney = 0.0;
+		totalMoney = 0.0f;
 		totalMoneyText.text = "0";
 		gps = 0;
 		gpsText.text = "0";
 		im.updateItemValues ();
 		prestigePanel.SetActive (false);
-		for (int i = 1; i < im.items.Length; i++) {
-			im.items [i].bought = false;
+		for (int i = 1; i < 9; i++) {
+			im.currentItem.stock = 0;
+			im.setupValues ();
 		}
 		foreach (Helper h in hList) {
 			h.num = 0;
@@ -166,7 +189,7 @@ public class GameController : MonoBehaviour {
 	void addHelper(int c){
 		//Check to see player has enough money to buy and if item is bought
 		current = c;
-		if (totalMoney >= hList [current].pValue && im.isBought (current)) {
+		if (totalMoney >= hList [current].pValue && im.hasStock (current)) {
 			gps = 0;
 			hList[current].num ++;
 			totalMoney -= hList [current].pValue;
@@ -181,10 +204,9 @@ public class GameController : MonoBehaviour {
 			}
 		}
 	}
-
-	//Save for later
+		
 	//Takes the amount and formats it by shortening the amount
-	public string formatMoney(double m){
+	public string formatMoney(float m){
 		/*     10K  - 10,000
 		 	   100K - 100,000
 		       1M   - 1,000,000
@@ -193,16 +215,18 @@ public class GameController : MonoBehaviour {
 		string amount = "";
 		if (m >= 10000 && m < 1000000) {
 			m = m / 1000;
+			m.ToString ("f2");
 			amount = m + "K";
 		} else if (m >= 1000000 && m < 1000000000) {
 			m = m / 1000000;
-			//Round number
+			m.ToString ("f2");
 			amount = m + "M";
 		} else if (m >= 1000000000 ) {
 			m = m / 1000000000;
+			m.ToString ("f2");
 			amount = m + "B";
 		} else {
-			amount = "" + m;
+			amount = "" + m.ToString ("f2");
 		}
 
 		return amount;
