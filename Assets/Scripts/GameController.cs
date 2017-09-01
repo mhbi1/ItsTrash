@@ -29,10 +29,12 @@ public class GameController : MonoBehaviour {
 	public Helper[] hList;
 	public ItemManager im;
 	public float totalMoney;
+	public float goal;
 	GameObject[] itemPool = new GameObject[20];
 	int gps;
 	int current = 0;
 	float time = 0.0f;
+
 
 	void Start () {
 		Button btn = menu.GetComponent<Button> ();
@@ -45,24 +47,12 @@ public class GameController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update (){
+		//Maybe make own method?
 		//Creates the trash item
 		current = im.current;
 		//Mouse clicking
 		if (Input.GetMouseButtonDown (0) && !EventSystem.current.IsPointerOverGameObject()){
-			//Debug.Log ("Button pressed.");
-			var mousePos = Input.mousePosition;
-			mousePos.z = 1.0f;
-			var objectPos = Camera.main.ScreenToWorldPoint (mousePos);
-			if (objectPos.y > 1.5) {
-				item = im.getItem ();
-				if (im.hasStock (current)) {
-					im.subtractStock ();
-					getCurrentItemInfo ();
-					Instantiate (item, objectPos, Quaternion.identity);
-				} else {
-					notificationText.text = "No more " + im.getName () + "s.";
-				}
-			}
+			createTrash ();
 		}
 		//Instead of instantiating, have a pool of items that is moved to the location of the mousePos
 
@@ -98,6 +88,23 @@ public class GameController : MonoBehaviour {
 
 	}
 
+	public void createTrash(){
+		//Mouse Clicking
+		var mousePos = Input.mousePosition;
+		mousePos.z = 1.0f;
+		var objectPos = Camera.main.ScreenToWorldPoint (mousePos);
+		if (objectPos.y > 1.5) {
+			item = im.getItem ();
+			if (im.hasStock (current)) {
+				im.subtractStock ();
+				getCurrentItemInfo ();
+				Instantiate (item, objectPos, Quaternion.identity);
+			} else {
+				notificationText.text = "No more " + im.getName () + "s.";
+			}
+		}
+	}
+
 	public void getCurrentItemInfo() {
 		currentItemName.text = im.getName ();
 		currentItemStock.text = "x" + im.getStock ();
@@ -114,7 +121,6 @@ public class GameController : MonoBehaviour {
 
 	public void updateTotal(){
 		//Updates the total money with the trash item value
-		//totalMoney = float.Parse (totalMoneyText.text);
 		totalMoney += im.currentItem.value;
 		//Debug.Log ("Item " + current + " value is " + im.items[current].value);
 		//Debug.Log ("totalMoney is " + totalMoney);

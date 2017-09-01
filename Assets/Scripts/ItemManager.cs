@@ -34,23 +34,15 @@ public class ItemManager : MonoBehaviour {
 	public int current;
 	public int prestige = 0;
 	public GameController gc;
+	public bool tutorial = false;
 
 	void Start () {
 		current = 0;
-		setupValues ();
-		currentItem = items [0];
-		updateItemValues ();
-		/*/Adds functionality to items and initiates items
-		for(int i = 0; i < items.Length; i++) {
-			Button btn = items [i].name.GetComponent<Button> ();
-			int temp = i;
-			btn.onClick.AddListener (delegate{changeItem(temp);});
-			if (i == 0) {
-				items [i].bought = true;
-			} else {
-				items [i].bought = false;
-			}
-		}*/
+		if (!tutorial) {
+			setupValues ();
+			currentItem = items [0];
+			updateItemValues ();
+		} 
 	}
 
 	public void setupValues(){
@@ -94,7 +86,7 @@ public class ItemManager : MonoBehaviour {
 		gc.getCurrentItemInfo ();
 		updateItemValues ();
 	}
-
+		
 	void buyItem(int c){
 		/*  Check to see if player has enough money to buy
 			Adds more stock to the item
@@ -124,17 +116,6 @@ public class ItemManager : MonoBehaviour {
 		} else {
 			gc.notificationText.text = "Not enough money.";
 		}
-
-		/*/float totalMoney = float.Parse (totalMoneyText.text);
-		if (gc.totalMoney >= items [c].value) {
-			items [c].bought = true;
-			gc.totalMoney -= items [c].value;
-			totalMoneyText.text = gc.formatMoney (gc.totalMoney);
-			current = c;
-			Debug.Log ("Item successfully bought.");
-		} else {
-			Debug.Log ("Not enough money.");
-		}*/
 	}
 
 	public bool hasStock(int i) {
