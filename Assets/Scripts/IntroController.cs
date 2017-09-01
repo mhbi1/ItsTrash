@@ -31,7 +31,7 @@ public class IntroController : MonoBehaviour {
 				prologue2.SetActive (true);
 				mammon.SetActive (true);
 			} else if (steps == 3) {
-				SceneManager.LoadScene ("Tutorial");
+				SceneManager.LoadScene ("GameScreen");
 			}
 		}
 	}

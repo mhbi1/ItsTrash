@@ -7,22 +7,22 @@ using UnityEngine.SceneManagement;
 public class MainMenuButtons : MonoBehaviour {
 
 	public Button startBtn;
-	public Button h2pBtn;
+	//public Button h2pBtn;
 
 	// Use this for initialization
 	void Start () {
 		Button btn = startBtn.GetComponent<Button> ();
-		Button btn2 = h2pBtn.GetComponent<Button> ();
+//		Button btn2 = h2pBtn.GetComponent<Button> ();
 		btn.onClick.AddListener (startGame);
-		btn2.onClick.AddListener (toTutorial);
-		Debug.Log (SceneManager.sceneCountInBuildSettings);
+//		btn2.onClick.AddListener (toTutorial);
+		//Debug.Log (SceneManager.sceneCountInBuildSettings);
 	}
 
 	void startGame() {
-		SceneManager.LoadScene ("GameScreen");
+		SceneManager.LoadScene ("Intro");
 	}
 
-	void toTutorial() {
+	/*void toTutorial() {
 		SceneManager.LoadScene ("Tutorial");
-	}
+	}*/
 }

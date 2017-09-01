@@ -10,6 +10,12 @@ public class MenuController : MonoBehaviour {
 	public Button settingsBtn;
 	public GameObject menuPanel;
 	public GameObject prestigePanel;
+	public GameController gc;
+	public Image goal;
+	public Sprite prestige0;
+	public Sprite prestige1;
+	public Sprite prestige2;
+	public Sprite prestige3;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +24,7 @@ public class MenuController : MonoBehaviour {
 		//Button btn3 = creditsBtn.GetComponent<Button> ();
 		btn.onClick.AddListener (exitMenu);
 		btn2.onClick.AddListener (showPrestige);
+		setupGoal ();
 	}
 	
 	void exitMenu() {
@@ -28,5 +35,17 @@ public class MenuController : MonoBehaviour {
 	void showPrestige() {
 		prestigePanel.SetActive (true);
 		menuPanel.SetActive (false);
+	}
+		
+	void setupGoal(){
+		if (gc.getPrestige () == 0) {
+			goal.sprite = prestige0;
+		} else if (gc.getPrestige () == 1) {
+			goal.sprite = prestige1;
+		} else if (gc.getPrestige () == 2) {
+			goal.sprite = prestige2;
+		}else {
+			goal.sprite = prestige3;
+		}
 	}
 }

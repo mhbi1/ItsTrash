@@ -215,16 +215,13 @@ public class GameController : MonoBehaviour {
 		string amount = "";
 		if (m >= 10000 && m < 1000000) {
 			m = m / 1000;
-			m.ToString ("f2");
-			amount = m + "K";
+			amount = m.ToString ("f2") + "K";
 		} else if (m >= 1000000 && m < 1000000000) {
 			m = m / 1000000;
-			m.ToString ("f2");
-			amount = m + "M";
+			amount = m.ToString ("f2") + "M";
 		} else if (m >= 1000000000 ) {
 			m = m / 1000000000;
-			m.ToString ("f2");
-			amount = m + "B";
+			amount = m.ToString ("f2") + "B";
 		} else {
 			amount = "" + m.ToString ("f2");
 		}
