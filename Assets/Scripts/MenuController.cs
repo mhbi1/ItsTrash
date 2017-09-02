@@ -26,7 +26,10 @@ public class MenuController : MonoBehaviour {
 		btn2.onClick.AddListener (showPrestige);
 		setupGoal ();
 	}
-	
+
+	void Update(){
+		setupGoal ();
+	}
 	void exitMenu() {
 		menuPanel.SetActive (false);
 	}

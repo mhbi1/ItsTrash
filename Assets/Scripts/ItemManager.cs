@@ -150,6 +150,10 @@ public class ItemManager : MonoBehaviour {
 		return prestige;
 	}
 
+	public void increaseTM(){
+		prestige++;
+	}
+
 	int getAddingStock(){
 		/*
 			items[0-2] get 15 more stock

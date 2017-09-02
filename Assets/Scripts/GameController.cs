@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour {
 	public Text[] helperNum;
 	public Text[] helperCost;
 	public Helper[] hList;
+	public Color[] helperBtnColors;
 	public ItemManager im;
 	public float totalMoney;
 	public float goal;
@@ -43,6 +44,12 @@ public class GameController : MonoBehaviour {
 		hList = new Helper[9];
 		setupHelpers ();
 		getCurrentItemInfo ();
+
+		/*/Gets all the orignal colors for helpers
+		for (int i = 0; i < helperButtons.Length; i++) {
+			ColorBlock temp = helperButtons [i].colors;
+			helperBtnColors [i] = temp.normalColor;
+		}*/
 	}
 
 	// Update is called once per frame
@@ -51,8 +58,10 @@ public class GameController : MonoBehaviour {
 		//Creates the trash item
 		current = im.current;
 		//Mouse clicking
-		if (Input.GetMouseButtonDown (0) && !EventSystem.current.IsPointerOverGameObject()){
-			createTrash ();
+		if (Input.GetMouseButtonDown (0)) {
+			if (!EventSystem.current.IsPointerOverGameObject ()) {
+				createTrash ();
+			}
 		}
 		//Instead of instantiating, have a pool of items that is moved to the location of the mousePos
 
@@ -70,7 +79,20 @@ public class GameController : MonoBehaviour {
 			}
 		}*/
 
-		//---------Trash helpers---------------
+		//---------Trash helpers---------------//
+		//Helpers are black if there is no stock
+		for (int h = 0; h < helperButtons.Length; h++) {
+			if (!(im.items [h].stock > 0)) {
+				ColorBlock hBtn = helperButtons [h].colors;
+				hBtn.normalColor = new Color (0, 0, 0);
+				helperButtons [h].GetComponent<Button> ().colors = hBtn;
+			} else {
+				ColorBlock hBtn = helperButtons [h].colors;
+				hBtn.normalColor = new Color (1, 1, 1);
+				helperButtons [h].GetComponent<Button> ().colors = hBtn;
+			}
+		}
+
 		time += Time.deltaTime;
 		//Checks for time constraint. if met, loop through array of helpers
 		if (time > 5) {
@@ -146,7 +168,7 @@ public class GameController : MonoBehaviour {
 		
 	//Upgrade prestige
 	public void buyTM(){
-		im.prestige++;
+		im.increaseTM ();
 		//Debug.Log ("Prestige is " + getPrestige ());
 	}
 

@@ -42,11 +42,19 @@ public class PrestigeController : MonoBehaviour {
 				gc.resetGame ();
 				gc.goal += 100000000000;
 			}
-		} else {
-			if (gc.totalMoney >= (1000000000 * (gc.getPrestige () + 1))) {
+		} else if (gc.getPrestige () == 1) { 
+			if (gc.totalMoney >= (2000000000)) {
 				gc.buyTM ();
 				gc.setItemValues ();
 				gc.resetGame ();
+				gc.goal += 300000000000;
+			}
+		} else {
+			if (gc.totalMoney >= (3000000000)) {
+				gc.buyTM ();
+				gc.setItemValues ();
+				gc.resetGame ();
+				gc.goal += 600000000000;
 			}
 		}
 
