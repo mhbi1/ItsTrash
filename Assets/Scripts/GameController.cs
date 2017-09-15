@@ -10,25 +10,27 @@ public class Helper {
 	public float value;
 	public float pValue;
 	public int num;
-	public int timeStat;
+	public float currentTime;
+	public float timeStat;
 }
 
 public class GameController : MonoBehaviour {
-	public Button[] helperButtons;
 	public Button menu;
 	public Button okButton;
+	public Button[] helperButtons;
 	public GameObject menuPanel;
 	public GameObject prestigePanel;
 	public GameObject item;
 	public GameObject welcomePanel;
 	public Image currentItemImage;
-	public Text gpsText;
+	public Image[] progressBars;
 	public Text totalMoneyText;
 	public Text notificationText;
 	public Text currentItemStock;
 	public Text currentItemName;
 	public Text currentItemValue;
 	public Text moneyEarned;
+	public Text[] gpsText;
 	public Text[] helperNum;
 	public Text[] helperCost;
 	public Helper[] hList;
@@ -38,7 +40,7 @@ public class GameController : MonoBehaviour {
 	public float goal;
 
 	int current = 0;
-	float time = 0.0f;
+	//float time = 0.0f;
 	float moneyMade;
 	float gps;
 	DateTime currentTime;
@@ -60,12 +62,13 @@ public class GameController : MonoBehaviour {
 		DateTime oldTime = DateTime.FromBinary(temp);
 		//Use the Subtract method and store the result as a timespan variable
 		difference = currentTime.Subtract(oldTime);
-	}
 
-	void OnApplicationQuit()
-	{
-		//Save the current system time as a string in the player prefs class
-		PlayerPrefs.SetString("sysString", System.DateTime.Now.ToBinary().ToString());
+		foreach (Image i in progressBars) {
+			i.fillAmount = 0.0f;
+		}
+		foreach (Text t in gpsText) {
+			t.text = "";
+		}
 	}
 
 	void OnApplicationPause(bool pauseStatus){
@@ -120,22 +123,18 @@ public class GameController : MonoBehaviour {
 				helperButtons [h].GetComponent<Button> ().colors = hBtn;
 			}
 		}
-
-		//TIME methods
-		time += Time.deltaTime;
-		//Checks for time constraint. if met, loop through array of helpers
-		if (time > 5) {
-			foreach (Helper h in hList) {
-				if (h.num > 0){
-					// If helpers exist, multiply value of item by number and add to total
-					float aValue = (h.value / 2) * h.num;
-					totalMoney = totalMoney + aValue;
-					totalMoneyText.text = formatMoney (totalMoney);
-				}
+			
+		calculateTime ();
+		// Controls the speed of progress bars
+		// Resets and adds money to total when full
+		for (int i = 0; i < progressBars.Length; i++) {
+			if (progressBars[i].fillAmount == 1) {
+				progressBars[i].fillAmount = 0;
+				hList [i].currentTime = 0;
+				addToTotal (hList[i]);
 			}
-			time = 0;
+			progressBars[i].fillAmount += ( hList[i].currentTime / hList[i].timeStat)/ 100.0f;
 		}
-		gpsText.text = "$" + formatMoney(gps) + " every 30 seconds";
 
 	}
 
@@ -164,19 +163,31 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	// If helpers exist, start timer for gps 
+	void calculateTime(){
+		for (int h = 0; h < hList.Length; h++) {
+			if (hList[h].num > 0){
+				// Update current time when there are helpers
+				hList [h].currentTime += Time.deltaTime;
+				gpsText [h].text = "$" + (hList [h].value * hList [h].num) + " every " + hList [h].timeStat + " seconds";
+			}
+		}
+	}
+
+	// Adds the value of the helper to totalMoney
+	void addToTotal(Helper h){
+		// Multiplies value by number of helpers
+		float aValue = (h.value) * h.num;
+		totalMoney = totalMoney + aValue;
+		totalMoneyText.text = formatMoney (totalMoney);
+	}
+
 	public void getCurrentItemInfo() {
 		currentItemName.text = im.getName ();
 		currentItemStock.text = "x" + im.getStock ();
 		currentItemValue.text = formatMoney (im.getValue ());
 		currentItemImage.sprite = im.getItem ().GetComponent<SpriteRenderer>().sprite;
 	}
-
-	/*void setupPool(){
-		foreach (GameObject g in itemPool) {
-			//var objectPos = (20, -20, 0);
-			//Instantiate (item, [20 -20 0], Quaternion.identity);
-		}
-	}*/
 
 	public void updateTotal(){
 		//Updates the total money with the trash item value
@@ -190,7 +201,7 @@ public class GameController : MonoBehaviour {
 		totalMoney = 0.0f;
 		totalMoneyText.text = "0";
 		gps = 0;
-		gpsText.text = "0";
+		//gpsText.text = "0";
 		im.updateItemValues ();
 		prestigePanel.SetActive (false);
 		for (int i = 1; i < 9; i++) {
@@ -236,12 +247,14 @@ public class GameController : MonoBehaviour {
 		hList [0].value = 1.00f;
 		hList [0].timeStat = 5;
 		hList [0].pValue = 2.00f;
+		hList [0].currentTime = 0.0f;
 		helperCost [0].text = "$ " + formatMoney(hList [0].pValue);
 		//Sets up cost for helpers
 		for(int h = 1; h < hList.Length; h++){
 			hList [h].value = hList [h - 1].value * 10;
 			hList[h].pValue = hList[h].value * 2;
-			hList [h].timeStat = (h * 5) + 10;
+			hList [h].timeStat = (h * 5) + 5;
+			hList [h].currentTime = 0.0f;
 			helperCost [h].text = "$ " + formatMoney(hList [h].pValue);
 		}
 
