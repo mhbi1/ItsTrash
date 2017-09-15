@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 [System.Serializable]
 public class Helper {
-	public int value;
-	public int pValue;
+	public float value;
+	public float pValue;
 	public int num;
+	public int timeStat;
 }
 
 public class GameController : MonoBehaviour {
 	public Button[] helperButtons;
 	public Button menu;
+	public Button okButton;
 	public GameObject menuPanel;
 	public GameObject prestigePanel;
 	public GameObject item;
+	public GameObject welcomePanel;
 	public Image currentItemImage;
 	public Text gpsText;
 	public Text totalMoneyText;
@@ -24,6 +28,7 @@ public class GameController : MonoBehaviour {
 	public Text currentItemStock;
 	public Text currentItemName;
 	public Text currentItemValue;
+	public Text moneyEarned;
 	public Text[] helperNum;
 	public Text[] helperCost;
 	public Helper[] hList;
@@ -31,11 +36,14 @@ public class GameController : MonoBehaviour {
 	public ItemManager im;
 	public float totalMoney;
 	public float goal;
-	GameObject[] itemPool = new GameObject[20];
-	int gps;
+
 	int current = 0;
 	float time = 0.0f;
-
+	float moneyMade;
+	float gps;
+	DateTime currentTime;
+	DateTime oldTime;
+	TimeSpan difference;
 
 	void Start () {
 		Button btn = menu.GetComponent<Button> ();
@@ -44,12 +52,32 @@ public class GameController : MonoBehaviour {
 		hList = new Helper[9];
 		setupHelpers ();
 		getCurrentItemInfo ();
+		//Stores current time when it starts
+		currentTime = System.DateTime.Now;
+		//Grab the old time from the player prefs
+		long temp = Convert.ToInt64(PlayerPrefs.GetString("sysString"));
+		//Convert the old time from binary to a DataTime variable
+		DateTime oldTime = DateTime.FromBinary(temp);
+		//Use the Subtract method and store the result as a timespan variable
+		difference = currentTime.Subtract(oldTime);
+	}
 
-		/*/Gets all the orignal colors for helpers
-		for (int i = 0; i < helperButtons.Length; i++) {
-			ColorBlock temp = helperButtons [i].colors;
-			helperBtnColors [i] = temp.normalColor;
-		}*/
+	void OnApplicationQuit()
+	{
+		//Save the current system time as a string in the player prefs class
+		PlayerPrefs.SetString("sysString", System.DateTime.Now.ToBinary().ToString());
+	}
+
+	void OnApplicationPause(bool pauseStatus){
+		if (pauseStatus) {
+			PlayerPrefs.SetString("sysString", System.DateTime.Now.ToBinary().ToString());
+		} else {
+			welcomePanel.SetActive (true);
+			Button btn = okButton.GetComponent<Button> ();
+			btn.onClick.AddListener (closeWelcome);
+			calculateMoneyEarned (difference);
+			moneyEarned.text = moneyMade.ToString ();
+		}
 	}
 
 	// Update is called once per frame
@@ -93,13 +121,14 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
+		//TIME methods
 		time += Time.deltaTime;
 		//Checks for time constraint. if met, loop through array of helpers
 		if (time > 5) {
 			foreach (Helper h in hList) {
 				if (h.num > 0){
 					// If helpers exist, multiply value of item by number and add to total
-					float aValue = h.value * h.num;
+					float aValue = (h.value / 2) * h.num;
 					totalMoney = totalMoney + aValue;
 					totalMoneyText.text = formatMoney (totalMoney);
 				}
@@ -108,6 +137,14 @@ public class GameController : MonoBehaviour {
 		}
 		gpsText.text = "$" + formatMoney(gps) + " every 30 seconds";
 
+	}
+
+	public void calculateMoneyEarned(TimeSpan t){
+		int timePassed = t.Seconds;
+		foreach (Helper h in hList) {
+			float i = timePassed / h.timeStat;
+			moneyMade += (h.value * i);
+		}
 	}
 
 	public void createTrash(){
@@ -134,12 +171,12 @@ public class GameController : MonoBehaviour {
 		currentItemImage.sprite = im.getItem ().GetComponent<SpriteRenderer>().sprite;
 	}
 
-	void setupPool(){
+	/*void setupPool(){
 		foreach (GameObject g in itemPool) {
 			//var objectPos = (20, -20, 0);
 			//Instantiate (item, [20 -20 0], Quaternion.identity);
 		}
-	}
+	}*/
 
 	public void updateTotal(){
 		//Updates the total money with the trash item value
@@ -195,24 +232,24 @@ public class GameController : MonoBehaviour {
 			btn.onClick.AddListener (delegate{addHelper(temp);});
 			helperNum [h].text = "x" + hList [h].num;
 		}
-		//Manually set values of helpers
-		hList [0].value = 1;
-		hList [1].value = 5;
-		hList [2].value = 25;
-		hList [3].value = 500;
-		hList [4].value = 800;
-		hList [5].value = 1500;
-		hList [6].value = 20000;
-		hList [7].value = 500000;
-		hList [8].value = 10000000;
+		//Manually set first helper 
+		hList [0].value = 1.00f;
+		hList [0].timeStat = 5;
+		hList [0].pValue = 2.00f;
+		helperCost [0].text = "$ " + formatMoney(hList [0].pValue);
 		//Sets up cost for helpers
-		for(int h = 0; h < hList.Length; h++){
+		for(int h = 1; h < hList.Length; h++){
+			hList [h].value = hList [h - 1].value * 10;
 			hList[h].pValue = hList[h].value * 2;
+			hList [h].timeStat = (h * 5) + 10;
 			helperCost [h].text = "$ " + formatMoney(hList [h].pValue);
 		}
 
 	}
 
+	void closeWelcome() {
+		welcomePanel.SetActive (false);
+	}
 
 	void addHelper(int c){
 		//Check to see player has enough money to buy and if item is bought
@@ -233,6 +270,8 @@ public class GameController : MonoBehaviour {
 		}
 	}
 		
+
+
 	//Takes the amount and formats it by shortening the amount
 	public string formatMoney(float m){
 		/*     10K  - 10,000
